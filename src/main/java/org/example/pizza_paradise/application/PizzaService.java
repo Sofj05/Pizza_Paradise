@@ -3,6 +3,7 @@ package org.example.pizza_paradise.application;
 import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.Pizza;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PizzaService {
@@ -18,7 +19,7 @@ public class PizzaService {
     }
 
     public List<Pizza> showPizzaList(){
-
+        List<Pizza> pizza = new ArrayList<>();
         return List.of();
     }
 
