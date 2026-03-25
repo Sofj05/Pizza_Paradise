@@ -14,11 +14,10 @@ public class PizzaService {
         this.pizzaRepo = pizzaRepo;
     }
 
-    public void makeNewPizza(Pizza pizza){
-
+    public void addNewPizza(Pizza pizza){
     }
 
-    public List<Pizza> showPizzaList(){
+    public List<Pizza> getPizzaMenu(){
         List<Pizza> pizza = new ArrayList<>();
         return List.of();
     }

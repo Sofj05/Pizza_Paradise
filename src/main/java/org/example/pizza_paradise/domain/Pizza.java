@@ -6,6 +6,7 @@ import java.util.List;
 
 
 public class Pizza {
+    private int id;
     private String name;
     private int price;
     private List<Toppings> toppingsList;
@@ -14,12 +15,24 @@ public class Pizza {
     public Pizza(){}
 
     public Pizza(String name, int price, List<Toppings> toppingsList, String description){
-
         this.name = name;
         this.price=price;
         this.toppingsList = toppingsList;
         this.description = description;
     }
+
+    public Pizza(int id, String name, int price, List<Toppings> toppingsList, String description){
+        this.id = id;
+        this.name = name;
+        this.price=price;
+        this.toppingsList = toppingsList;
+        this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {}
 
     public String getName() {
         return name;
