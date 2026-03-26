@@ -3,7 +3,9 @@ package org.example.pizza_paradise.infrastructure;
 import org.example.pizza_paradise.domain.IUserRepository;
 import org.example.pizza_paradise.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class JdbcUserRepository implements IUserRepository {
 
     private JdbcTemplate jdbcTemplate;
@@ -14,7 +16,7 @@ public class JdbcUserRepository implements IUserRepository {
 
     public void save(User user) {
         String sql = """
-                insert into users(name,email,address,points) 
+                insert into users(name,email,address,points)
                 values (?,?,?,?)
                 """;
         jdbcTemplate.update(sql, ps -> {
