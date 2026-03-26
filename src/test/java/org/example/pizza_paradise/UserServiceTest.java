@@ -18,6 +18,7 @@ public class UserServiceTest {
     private UserService userService;
     private JdbcTemplate jdbcTemplate = new JdbcTemplate();
     private IUserRepository userRepo = new JdbcUserRepository(jdbcTemplate);
+    private final User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
 
     @BeforeEach
     void setUp() {
@@ -26,7 +27,6 @@ public class UserServiceTest {
 
     @Test
     void ShouldAddBonusPointsToUser() {
-       User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
         user.addBonusPoints(10);
         assertEquals(10, user.getPoints());
     }
@@ -43,7 +43,7 @@ public class UserServiceTest {
     void shouldCreateUser() {
         IUserRepository userRepository = mock(IUserRepository.class);
 
-        userService.createUser("Mathias", "Mathias@mail.com");
+        userService.createUser(user);
         verify(userRepository).save(any(User.class));
     }
     @Test

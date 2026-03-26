@@ -16,8 +16,6 @@ public class UserService {
 
 
     public void createUser(User user) {
-        user.setName(user.getName());
-        user.setEmail(user.getEmail());
         uRepo.save(user);
     }
 
