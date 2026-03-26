@@ -1,11 +1,13 @@
 package org.example.pizza_paradise.domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class Order {
     private int id;
     private List<Pizza> pizzas;
     private User user;
+    private Date date;
     private double totalPrice;
 
     public Order(){}
