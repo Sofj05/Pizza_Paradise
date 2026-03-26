@@ -14,6 +14,10 @@ public class UserService {
 
 
     public void createUser(String name, String email) {
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        uRepo.save(user);
     }
 
     public User login(String mail) {

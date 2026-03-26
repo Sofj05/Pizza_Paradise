@@ -7,7 +7,10 @@ public enum Toppings {
     DRESSING("Dressing", 10.0),
     PEPPERONI("Pepperoni", 8.0),
     PINEAPPLE("Pineapple", 15.0),
-    HAM("Ham", 8.0);
+    HAM("Ham", 8.0),
+    SAUSAGE("Sausage", 8.0),
+    GROUNDBEEF("Ground beef", 80.0),
+    EDIBLEGOLD("Edible Gold", 200.0);
 
     private final String name;
     private final double price;

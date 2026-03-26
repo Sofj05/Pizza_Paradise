@@ -6,8 +6,7 @@ public class User {
     private String address;
     private int points;
 
-    User(){
-
+    public User(){
     }
 
     public User(String name, String email, String address){
@@ -15,6 +14,13 @@ public class User {
         this.email = email;
         this.address = address;
         this.points = 0;
+    }
+
+    public User(String name, String email, String address, int points){
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.points = points;
     }
 
 

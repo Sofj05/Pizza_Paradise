@@ -6,6 +6,7 @@ import org.example.pizza_paradise.domain.User;
 import org.example.pizza_paradise.infrastructure.JdbcUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,7 +16,8 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     private UserService userService;
-    private IUserRepository userRepo = new JdbcUserRepository();
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    private IUserRepository userRepo = new JdbcUserRepository(jdbcTemplate);
 
     @BeforeEach
     void setUp() {
@@ -36,6 +38,7 @@ public class UserServiceTest {
             user.addBonusPoints(-10);
         });
     }
+
     @Test
     void shouldCreateUser() {
         IUserRepository userRepository = mock(IUserRepository.class);

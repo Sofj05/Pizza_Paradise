@@ -2,14 +2,51 @@ package org.example.pizza_paradise.infrastructure;
 
 import org.example.pizza_paradise.domain.IUserRepository;
 import org.example.pizza_paradise.domain.User;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JdbcUserRepository implements IUserRepository {
 
+    private JdbcTemplate jdbcTemplate;
+
+    public JdbcUserRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public void save(User user) {
+        String sql = """
+                insert into users(name,email,address,points) 
+                values (?,?,?,?)
+                """;
+        jdbcTemplate.update(sql, ps -> {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getAddress());
+            ps.setInt(4, user.getPoints());
+        });
     }
 
     public User findByEmail(String email) {
-        return null;
+        String sql = """
+                SELECT name, email, address, points
+                FROM Users
+                WHERE email = ?;
+                """;
+
+        return (User) jdbcTemplate.query(sql, (rs, rowNum) -> (
+                new User(
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getInt("points")
+                )
+                ));
+    }
+
+    public void delete(String email) {
+        String sql = """
+                DELETE FROM users WHERE email = ?;
+                """;
+        jdbcTemplate.update(sql, email);
     }
 
 }

@@ -4,8 +4,10 @@ import org.example.pizza_paradise.application.PizzaService;
 import org.example.pizza_paradise.domain.Enum.Toppings;
 import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.Pizza;
+import org.example.pizza_paradise.infrastructure.JdbcPizzaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class PizzaServiceTest {
 
     private PizzaService pizzaService;
-    private IPizzaRepository pizzaRepo = new IPizzaRepository(){};
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    private IPizzaRepository pizzaRepo = new JdbcPizzaRepository(jdbcTemplate);
     private List<Toppings> toppings;
 
     @BeforeEach
