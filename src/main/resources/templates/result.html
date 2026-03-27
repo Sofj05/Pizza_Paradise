@@ -36,7 +36,7 @@
             <div th:each="pizza : ${order.pizzas}">
                 <div class="order-item">
                     <p>
-                        <strong th:text="${pizza.name}">
+                        <strong th:text="${pizza.name} + ' x ' + ${pizza.quantity}">
                             Pizza Name
                         </strong>
                     </p>

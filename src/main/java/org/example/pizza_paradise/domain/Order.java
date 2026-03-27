@@ -65,6 +65,13 @@ public class Order {
     }
 
     public void addPizza(Pizza pizza) {
+       for (Pizza p : pizzas){
+           if (p.getId() == pizza.getId()){
+               p.setQuantity(p.getQuantity()+1);
+               totalPrice = totalPrice + p.getPrice();
+               return;
+           }
+       }
         pizzas.add(pizza);
         totalPrice += pizza.getPrice();
     }

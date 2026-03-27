@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 
@@ -45,6 +46,9 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
             User user = userService.login(email,name);
             session.setAttribute("user", user);
             model.addAttribute("user",user);
+
+            List<Order> userOrder = orderService.getOrders(user.getEmail());
+            model.addAttribute("allOrders",userOrder);
             return "result";
         } catch(ValidationException e){
             model.addAttribute("message",e.getMessage());
@@ -54,6 +58,9 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
     @GetMapping("/result")
     public String result(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("allOrders",orderService.getOrders(user.getEmail()));
         return "result";
     }

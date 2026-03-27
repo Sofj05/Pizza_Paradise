@@ -25,7 +25,6 @@ public class JdbcOrderRepository implements IOrderRepository {
         int orderId = insertOrder(order);
         insertOrderPizzas(orderId,order.getPizzas());
     }
-
     public int insertOrder(Order order) {
         String sql = """
                 INSERT INTO ORDERS(user_email,totalPrice,created_at)
@@ -53,13 +52,14 @@ public class JdbcOrderRepository implements IOrderRepository {
         for (Pizza pizza : pizzas) {
             pizzaCounts.merge(pizza.getId(), 1, Integer::sum);
         }
-        for (Map.Entry<Integer, Integer> entry : pizzaCounts.entrySet()) {
-            jdbcTemplate.update(sql, orderId, entry.getKey(), entry.getValue());
+
+        for (Pizza pizza : pizzas ) {
+            jdbcTemplate.update(sql, orderId, pizza.getId(), pizza.getQuantity());
         }
     }
 
     public List<Order> findOrdersByUserEmail(String email) {
-        String sql = """
+        String sql = """ 
                 SELECT 
                     o.id,
                     o.created_at,
@@ -67,7 +67,7 @@ public class JdbcOrderRepository implements IOrderRepository {
                     o.user_email,
                     u.name 
                 FROM ORDERS o
-                    join USERS u ON o.USER_EMAIL = u.email
+                    join USERS u ON o.USER_EMAIL = u.email        
                 WHERE user_email = ?;
         """;
         return jdbcTemplate.query(sql,
@@ -101,6 +101,7 @@ public class JdbcOrderRepository implements IOrderRepository {
                     pizza.setId(rs.getInt("id"));
                     pizza.setName(rs.getString("name"));
                     pizza.setPrice(rs.getDouble("price"));
+                    pizza.setQuantity(rs.getInt("quantity"));
                     return pizza;
 
                 }, orderId);

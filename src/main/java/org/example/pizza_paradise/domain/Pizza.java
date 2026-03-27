@@ -11,6 +11,7 @@ public class Pizza {
     private double price;
     private List<Toppings> toppingsList;
     private String description;
+    private int quantity;
 
     public Pizza(){}
 
@@ -19,6 +20,7 @@ public class Pizza {
         this.price=price;
         this.toppingsList = toppingsList;
         this.description = description;
+        this.quantity = 1;
     }
 
     public Pizza(int id, String name, double price, List<Toppings> toppingsList, String description){
@@ -27,6 +29,7 @@ public class Pizza {
         this.price=price;
         this.toppingsList = toppingsList;
         this.description = description;
+        this.quantity = 1;
     }
 
     public Pizza(int id, String name, double price, String description) {
@@ -34,6 +37,7 @@ public class Pizza {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.quantity = 1;
     }
 
     public int getId() {
@@ -67,5 +71,12 @@ public class Pizza {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

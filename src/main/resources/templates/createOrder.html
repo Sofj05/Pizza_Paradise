@@ -34,10 +34,10 @@
     <div class="order-box">
         <h2>Your Order</h2>
 
-        <div th:each="item : ${order.pizzas}">
+        <div th:each="pizza : ${order.pizzas}">
             <div class="order-item">
-                <p><strong th:text="${item.name}">Pizza</strong></p>
-                <p th:text="${item.price} + ' kr'"></p>
+                <p><strong th:text="${pizza.name} +' x '+ ${pizza.quantity}">Pizza</strong></p>
+                <p th:text="${pizza.price} + ' kr'"></p>
             </div>
         </div>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Confirmation</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div>
@@ -21,7 +22,7 @@
     <div th:each="pizza : ${order.pizzas}">
         <div class="order-item">
             <p>
-                <strong th:text="${pizza.name}">
+                <strong th:text="${pizza.name} +' x '+ ${pizza.quantity}">Pizza
                     Pizza Name
                 </strong>
             </p>
@@ -43,7 +44,7 @@
     </h3>
     <br>
     <!-- Back to menu -->
-    <a th:href="@{/pizzaMenu}">
+    <a th:href="@{/result}">
         <button class="checkout-btn">
             Back to Menu
         </button>
