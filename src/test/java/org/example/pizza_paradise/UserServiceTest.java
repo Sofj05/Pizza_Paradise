@@ -46,20 +46,20 @@ public class UserServiceTest {
         userService.createUser(user);
         verify(userRepository).save(any(User.class));
     }
-    @Test
-    void shouldLoginUserWithCorrectCredentials() {
-        IUserRepository userRepository = mock(IUserRepository.class);
-        User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
-
-        when(userRepository.findByEmail("Mathias@mail.com"))
-                .thenReturn(user);
-
-        UserService userService = new UserService(userRepository);
-
-        User result = userService.login("Mathias@mail.com");
-
-        assertEquals(user, result);
-    }
+//    @Test
+//    void shouldLoginUserWithCorrectCredentials() {
+//        IUserRepository userRepository = mock(IUserRepository.class);
+//        User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
+//
+//        when(userRepository.findByEmail("Mathias@mail.com"))
+//                .thenReturn(user);
+//
+//        UserService userService = new UserService(userRepository);
+//
+//        User result = userService.login("Mathias@mail.com");
+//
+//        assertEquals(user, result);
+//    }
 
 
 

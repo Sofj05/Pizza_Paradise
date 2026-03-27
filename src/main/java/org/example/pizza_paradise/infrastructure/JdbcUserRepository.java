@@ -2,13 +2,14 @@ package org.example.pizza_paradise.infrastructure;
 
 import org.example.pizza_paradise.domain.IUserRepository;
 import org.example.pizza_paradise.domain.User;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JdbcUserRepository implements IUserRepository {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public JdbcUserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -33,15 +34,18 @@ public class JdbcUserRepository implements IUserRepository {
                 FROM Users
                 WHERE email = ?;
                 """;
-
-        return (User) jdbcTemplate.query(sql, (rs, rowNum) -> (
-                new User(
-                        rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getInt("points")
-                )
-                ));
+        try {
+            return jdbcTemplate.queryForObject(sql,
+                    (rs, rowNum) -> new User(
+                         rs.getString("name"),
+                         rs.getString("email"),
+                         rs.getString("address"),
+                         rs.getInt("points")
+                    )
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+          }
     }
 
     public void delete(String email) {

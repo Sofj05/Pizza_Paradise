@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -17,7 +17,8 @@
     </label><br>
 
     <button type="submit">login</button>
-</form>
+
+    <span th:if="${message}" th:text="${message}" style="color:red;"></span></form>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ package org.example.pizza_paradise.web;
 import org.example.pizza_paradise.application.UserService;
 import org.example.pizza_paradise.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +33,15 @@ public UserController(UserService userService) {
     @PostMapping("/login")
     public String HandleLogin(@RequestParam String name,@RequestParam String email, Model model) {
 
-        model.addAttribute("name", name);
-        model.addAttribute("email", email);
-        return "result";
+        try{
+            User user = userService.login(email,name);
+
+            model.addAttribute("user",user);
+            return "result";
+        } catch(IllegalArgumentException | EmptyResultDataAccessException e){
+            model.addAttribute("message",e.getMessage());
+            return "login";
+        }
     }
 
     @GetMapping("/register")
