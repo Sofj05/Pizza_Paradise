@@ -1,9 +1,11 @@
 package org.example.pizza_paradise.web;
 
+import org.example.pizza_paradise.application.OrderService;
+import org.example.pizza_paradise.application.PizzaService;
 import org.example.pizza_paradise.application.UserService;
+import org.example.pizza_paradise.application.Validation.ValidationException;
+import org.example.pizza_paradise.domain.Order;
 import org.example.pizza_paradise.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
 
     private final UserService userService;
+    private final PizzaService pizzaService;
+    private final OrderService orderService;
 
-public UserController(UserService userService) {
+public UserController(UserService userService,  PizzaService pizzaService, OrderService orderService) {
     this.userService = userService;
+    this.pizzaService = pizzaService;
+    this.orderService = orderService;
 }
 
     @GetMapping("/index")
@@ -38,7 +44,7 @@ public UserController(UserService userService) {
 
             model.addAttribute("user",user);
             return "result";
-        } catch(IllegalArgumentException | EmptyResultDataAccessException e){
+        } catch(ValidationException e){
             model.addAttribute("message",e.getMessage());
             return "login";
         }
@@ -55,6 +61,25 @@ public UserController(UserService userService) {
         userService.createUser(user);
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/pizzaMenu")
+    public String pizzaMenu(Model model){
+        model.addAttribute("pizzas", pizzaService.getPizzaMenu());
+        return "pizzaMenu";
+    }
+
+    @GetMapping("/createOrder")
+    public String createOrder(Model model){
+        model.addAttribute("pizzaList", pizzaService.getPizzaMenu());
+        orderService.createOrder(order);
+        return "createOrder";
+    }
+
+    @PostMapping("/addToOrder")
+    public String addToOrder(@ModelAttribute("order") Order order, Model model){
+        model.addAttribute("pizzaList", pizzaService.getPizzaMenu());
+        return "pizzaMenu";
     }
 
 

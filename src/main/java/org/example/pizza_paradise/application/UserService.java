@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final IUserRepository uRepo;
-    private final Validation validation = new Validation();
+    private final Validation validation;
 
-    public UserService(IUserRepository uRepo) {
+    public UserService(IUserRepository uRepo, Validation validation) {
         this.uRepo = uRepo;
+        this.validation = validation;
 
     }
 
@@ -25,7 +26,10 @@ public class UserService {
     public User login(String email, String name) {
         if(validation.validateLogin(email, name)){
         return uRepo.findByEmail(email);
-        };
+        }
         return null;
+    }
+    public void addPoint(){
+
     }
 }

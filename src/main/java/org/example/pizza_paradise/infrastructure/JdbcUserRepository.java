@@ -17,8 +17,8 @@ public class JdbcUserRepository implements IUserRepository {
 
     public void save(User user) {
         String sql = """
-                insert into users(name,email,address,points)
-                values (?,?,?,?)
+                INSERT INTO users(name,email,address,points)
+                VALUES (?,?,?,?)
                 """;
         jdbcTemplate.update(sql, ps -> {
             ps.setString(1, user.getName());
@@ -30,22 +30,23 @@ public class JdbcUserRepository implements IUserRepository {
 
     public User findByEmail(String email) {
         String sql = """
-                SELECT name, email, address, points
-                FROM Users
-                WHERE email = ?;
-                """;
+            SELECT name, email, address, points
+            FROM users
+            WHERE email = ?;
+            """;
         try {
             return jdbcTemplate.queryForObject(sql,
                     (rs, rowNum) -> new User(
-                         rs.getString("name"),
-                         rs.getString("email"),
-                         rs.getString("address"),
-                         rs.getInt("points")
-                    )
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("address"),
+                            rs.getInt("points")
+                    ),
+                    email
             );
         } catch (EmptyResultDataAccessException e) {
             return null;
-          }
+        }
     }
 
     public void delete(String email) {

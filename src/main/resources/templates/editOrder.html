@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit Order</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
+
+<h1>Edit Your Order</h1>
+
+<p>
+    <a th:href="@{/pizzaMenu}">Back to menu</a>
+</p>
+
+<div class="container">
+
+    <!-- LEFT SIDE: ORDER ITEMS -->
+    <div class="pizza-list">
+
+        <div class="pizza-card" th:each="item, iter : ${order}">
+            <h3 th:text="${item.name}">Pizza Name</h3>
+            <p th:text="${item.description}">Description</p>
+            <p><strong th:text="${item.price} + ' kr'">Price</strong></p>
+
+            <!-- Quantity selector -->
+            <form th:action="@{/updateQuantity}" method="post" style="margin-top: 10px;">
+                <input type="hidden" name="itemIndex" th:value="${iter.index}">
+                <label>Quantity:</label>
+                <input type="number" name="quantity" min="1" th:value="${item.quantity}">
+                <button class="add-btn" type="submit">Update</button>
+            </form>
+
+            <!-- Remove button -->
+            <form th:action="@{/removeFromOrder}" method="post" style="margin-top: 10px;">
+                <input type="hidden" name="itemIndex" th:value="${iter.index}">
+                <button class="add-btn" style="background:#555;" type="submit">Remove</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE: ORDER SUMMARY -->
+    <div class="order-box">
+        <h2>Order Summary</h2>
+
+        <div th:each="item : ${order}">
+            <div class="order-item">
+                <p><strong th:text="${item.name}">Pizza</strong></p>
+                <p th:text="'Qty: ' + ${item.quantity}"></p>
+                <p th:text="${item.price * item.quantity} + ' kr'"></p>
+            </div>
+        </div>
+
+        <h3>Total: <span th:text="${total}">0</span> kr</h3>
+
+        <form th:action="@{/saveOrder}" method="post">
+            <button class="checkout-btn" type="submit">Save changes</button>
+        </form>
+
+        <p style="margin-top: 10px;">
+            <a th:href="@{/createOrder}">Cancel</a>
+        </p>
+    </div>
+
+</div>
 
 </body>
 </html>

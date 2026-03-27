@@ -2,19 +2,53 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Order</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<h1>Opret ny pizza ordre</h1>
 
-<p><a th:href="@{/templates/pizzas}">Tilbage til fortiden</a></p>
+<h1>Pizza Menu</h1>
 
-<!-- FEJLBESKED -->
-<div th:if="${error}" style="color: red; font-weight: bold; margin-bottom: 15px;">
-    <p th:text="${error}"></p>
+<p><a th:href="@{/pizzaMenu}">Back to menu</a></p>
+
+<div class="container">
+
+    <!-- LEFT SIDE: PIZZA CARDS -->
+    <div class="pizza-list">
+
+        <div class="pizza-card" th:each="pizza : ${pizzaList}">
+            <h3 th:text="${pizza.name}">Pizza Name</h3>
+            <p th:text="${pizza.description}">Description</p>
+            <p><strong th:text="${pizza.price} + ' kr'">Price</strong></p>
+
+            <form th:action="@{/addToOrder}" method="post">
+                <input type="hidden" name="pizzaId" th:value="${pizza.id}">
+                <button class="add-btn" type="submit">Add</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE: ORDER SUMMARY -->
+    <div class="order-box">
+        <h2>Your Order</h2>
+
+        <div th:each="item : ${order}">
+            <div class="order-item">
+                <p><strong th:text="${item.name}">Pizza</strong></p>
+                <p th:text="${item.price} + ' kr'"></p>
+            </div>
+        </div>
+
+        <h3>Total: <span th:text="${total}">0</span> kr</h3>
+
+        <form th:action="@{/confirmOrder}" method="post">
+            <button class="checkout-btn" type="submit">Checkout</button>
+        </form>
+    </div>
+
 </div>
 
-<form th:action="@{/pizzas/createOrder}" method="post" th:object="${pizza}">
-</form>
 </body>
 </html>

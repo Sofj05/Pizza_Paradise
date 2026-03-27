@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
-<h1>Login</h1>
+
 <body>
-<form action="/login" method="post">
-    <label>Navn:</label><br>
-    <label>
-        <input type="text" name="name">
-    </label><br>
-    <label>E-mail:</label><br>
-    <label>
-        <input type="email" name="email">
-    </label><br>
 
-    <button type="submit">login</button>
+<h1>Login</h1>
 
-    <span th:if="${message}" th:text="${message}" style="color:red;"></span></form>
+<div class="container" style="justify-content: center;">
+
+    <div class="order-box" style="width: 350px;">
+
+        <form action="/login" method="post">
+
+            <label>Name:</label><br>
+            <input type="text" name="name" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+            <label>Email:</label><br>
+            <input type="email" name="email" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+            <button class="checkout-btn" type="submit">Login</button>
+
+            <p th:if="${message}" th:text="${message}" style="color: red; margin-top: 10px;"></p>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -1,8 +1,11 @@
 package org.example.pizza_paradise;
 
 import org.example.pizza_paradise.application.UserService;
+import org.example.pizza_paradise.application.Validation.Validation;
+import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.IUserRepository;
 import org.example.pizza_paradise.domain.User;
+import org.example.pizza_paradise.infrastructure.JdbcPizzaRepository;
 import org.example.pizza_paradise.infrastructure.JdbcUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,11 +21,13 @@ public class UserServiceTest {
     private UserService userService;
     private JdbcTemplate jdbcTemplate = new JdbcTemplate();
     private IUserRepository userRepo = new JdbcUserRepository(jdbcTemplate);
+    private IPizzaRepository pizzaRepo = new JdbcPizzaRepository(jdbcTemplate);
+    private final Validation validation = new Validation(userRepo, pizzaRepo);
     private final User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(userRepo);
+        userService = new UserService(userRepo, validation);
     }
 
     @Test

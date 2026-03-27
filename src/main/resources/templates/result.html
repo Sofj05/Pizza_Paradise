@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Result</title>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
 
-<h2>Welcome!</h2>
+<h1>Welcome!</h1>
 
-<p th:text="'Name: ' + ${name}"></p>
-<p th:text="'Email: ' + ${email}"></p>
+<div class="container">
+
+    <!-- LEFT SIDE: USER INFO -->
+    <div class="order-box">
+        <h2>User Information</h2>
+
+        <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+
+        <p style="margin-top: 20px;">
+            <a th:href="@{/pizzaMenu}">Show menu</a><br>
+            <a th:href="@{/index}">Log out</a>
+        </p>
+    </div>
+
+    <!-- RIGHT SIDE: ALL ORDERS -->
+    <div class="pizza-list" style="width: 70%;">
+
+        <div class="pizza-card" th:each="order : ${allOrders}">
+            <h3 th:text="'Order #' + ${order.id}">Order #1</h3>
+
+            <p><strong>User:</strong> <span th:text="${order.userName}"></span></p>
+            <p><strong>Total:</strong> <span th:text="${order.total} + ' kr'"></span></p>
+
+            <a th:href="@{'/editOrder/' + ${order.id}}" class="add-btn">View / Edit</a>
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

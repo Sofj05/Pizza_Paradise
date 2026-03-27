@@ -2,29 +2,42 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registrer ny bruger</title>
+    <title>Register New User</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
-<h1>Registrer ny bruger</h1>
 
 <body>
-<form th:action="@{/register}" method="post" th:object="${user}">
-    <div>
-        <label for="name">Navn</label>
-        <input type="text" id="name" th:field="*{name}">
-    </div>
-    <div>
-        <label for="email">email</label>
-        <input type="text" id="email" th:field="*{email}">
+
+<h1>Register New User</h1>
+
+<div class="container" style="justify-content: center;">
+
+    <div class="order-box" style="width: 350px;">
+
+        <form th:action="@{/register}" method="post" th:object="${user}">
+
+            <label for="name">Name</label><br>
+            <input type="text" id="name" th:field="*{name}" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+            <label for="email">Email</label><br>
+            <input type="email" id="email" th:field="*{email}" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+            <label for="address">Address</label><br>
+            <input type="text" id="address" th:field="*{address}" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+            <button class="checkout-btn" type="submit">Register</button>
+
+            <p th:if="${message}" th:text="${message}" style="color: red; margin-top: 10px;"></p>
+
+        </form>
+
+        <p style="margin-top: 15px;">
+            <a th:href="@{/login}">Back to login</a>
+        </p>
+
     </div>
 
-    <div>
-        <label for="address">adresse</label>
-        <input type="text" id="address" th:field="*{address}">
-    </div>
-
-
-    <button type="submit">registrer</button>
-</form>
+</div>
 
 </body>
 </html>

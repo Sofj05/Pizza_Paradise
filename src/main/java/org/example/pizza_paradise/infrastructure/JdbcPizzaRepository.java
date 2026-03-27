@@ -4,13 +4,14 @@ import org.example.pizza_paradise.domain.Enum.Toppings;
 import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.Pizza;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Repository
 public class JdbcPizzaRepository implements IPizzaRepository {
 
     private JdbcTemplate jdbcTemplate;

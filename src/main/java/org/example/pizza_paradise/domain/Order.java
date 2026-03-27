@@ -12,14 +12,16 @@ public class Order {
 
     public Order(){}
 
-    public Order(int id, List<Pizza> pizzas, User user, double totalPrice) {
+    public Order(int id, Date date, List<Pizza> pizzas, User user, double totalPrice) {
         this.id = id;
+        this.date = date;
         this.pizzas = pizzas;
         this.user = user;
         this.totalPrice = totalPrice;
     }
 
-    public Order(List<Pizza> pizzas, User user, double totalPrice) {
+    public Order(Date date, List<Pizza> pizzas, User user, double totalPrice) {
+        this.date = date;
         this.pizzas = pizzas;
         this.user = user;
         this.totalPrice = totalPrice;
@@ -30,6 +32,13 @@ public class Order {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public List<Pizza> getPizzas() {
@@ -46,10 +55,10 @@ public class Order {
         this.user = user;
     }
 
-    public double getPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
-    public void setPrice(double totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }
