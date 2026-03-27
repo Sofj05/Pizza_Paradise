@@ -5,6 +5,8 @@ import org.example.pizza_paradise.domain.IOrderRepository;
 import org.example.pizza_paradise.domain.Order;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
 
@@ -18,6 +20,10 @@ public class OrderService {
 
     public void createOrder(Order order) {
         orderRepo.save(order);
+    }
+
+    public List<Order> getOrders(String email) {
+        return orderRepo.findOrdersByUserEmail(email);
     }
 
 }

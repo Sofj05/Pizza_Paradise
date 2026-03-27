@@ -9,12 +9,12 @@ public class Order {
     private int id;
     private List<Pizza> pizzas =  new ArrayList<Pizza>();
     private User user;
-    private LocalDate date;
+    private Date date;
     private double totalPrice;
 
     public Order(){}
 
-    public Order(int id, LocalDate date, List<Pizza> pizzas, User user, double totalPrice) {
+    public Order(int id, Date date, List<Pizza> pizzas, User user, double totalPrice) {
         this.id = id;
         this.date = date;
         this.pizzas = pizzas;
@@ -22,7 +22,7 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Order(LocalDate date, List<Pizza> pizzas, User user, double totalPrice) {
+    public Order(Date date, List<Pizza> pizzas, User user, double totalPrice) {
         this.date = date;
         this.pizzas = pizzas;
         this.user = user;
@@ -36,10 +36,10 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

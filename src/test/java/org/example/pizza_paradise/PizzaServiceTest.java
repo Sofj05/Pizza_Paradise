@@ -2,6 +2,7 @@ package org.example.pizza_paradise;
 
 import org.example.pizza_paradise.application.PizzaService;
 import org.example.pizza_paradise.application.Validation.Validation;
+import org.example.pizza_paradise.application.Validation.ValidationException;
 import org.example.pizza_paradise.domain.Enum.Toppings;
 import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.IUserRepository;
@@ -59,15 +60,15 @@ class PizzaServiceTest {
     // tester exceptions ved indtastning af data til ny pizza
     @Test
     void newPizza_shouldRejectBlankName(){
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> pizzaService.addNewPizza(new Pizza("  ",50,toppings,"")));
     }
     @Test
     void newPizza_shouldRejectNonPositivePrice(){
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> pizzaService.addNewPizza(new Pizza("pizzaT", 0, toppings,"")));
 
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(ValidationException.class,
                 () -> pizzaService.addNewPizza(new Pizza("pizzaT", -50, toppings,"")));
     }
     @Test

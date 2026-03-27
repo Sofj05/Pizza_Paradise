@@ -28,7 +28,7 @@ public class JdbcPizzaRepository implements IPizzaRepository {
 
         jdbcTemplate.update(sql, ps -> {
             ps.setString(1, pizza.getName());
-            ps.setInt(2, pizza.getPrice());
+            ps.setDouble(2, pizza.getPrice());
             ps.setString(3, pizza.getDescription());
         });
 

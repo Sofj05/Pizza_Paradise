@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 
 public class UserController {
@@ -33,25 +35,27 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
     public String home(){
         return "index";
     }
-
     @GetMapping("/login")
     public String login(){
         return "login";
     }
     @PostMapping("/login")
     public String HandleLogin(@RequestParam String name,@RequestParam String email, HttpSession session, Model model) {
-
         try{
             User user = userService.login(email,name);
-
             session.setAttribute("user", user);
-
             model.addAttribute("user",user);
             return "result";
         } catch(ValidationException e){
             model.addAttribute("message",e.getMessage());
             return "login";
         }
+    }
+    @GetMapping("/result")
+    public String result(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("allOrders",orderService.getOrders(user.getEmail()));
+        return "result";
     }
 
     @GetMapping("/register")
@@ -84,13 +88,14 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
         if (order == null) {
             order = new Order();
             order.setUser(user);
+            order.setDate(new Date(System.currentTimeMillis()));
             session.setAttribute("order", order);
         }
 
         model.addAttribute("pizzaList", pizzaService.getPizzaMenu());
         model.addAttribute("order", order);
 
-        int total = order.getPizzas().stream().mapToInt(Pizza::getPrice).sum();
+        double total = order.getTotalPrice();
         model.addAttribute("total", total);
 
         return "createOrder";

@@ -24,21 +24,33 @@
             <a th:href="@{/index}">Log out</a>
         </p>
     </div>
-
+</div>
+<div class="container">
     <!-- RIGHT SIDE: ALL ORDERS -->
     <div class="pizza-list" style="width: 70%;">
 
         <div class="pizza-card" th:each="order : ${allOrders}">
             <h3 th:text="'Order #' + ${order.id}">Order #1</h3>
 
-            <p><strong>User:</strong> <span th:text="${order.userName}"></span></p>
-            <p><strong>Total:</strong> <span th:text="${order.total} + ' kr'"></span></p>
+            <p><strong>Pizzas:</strong>
+            <div th:each="pizza : ${order.pizzas}">
+                <div class="order-item">
+                    <p>
+                        <strong th:text="${pizza.name}">
+                            Pizza Name
+                        </strong>
+                    </p>
+                    <p th:text="${pizza.price} + ' kr'">
+                        0 kr
+                    </p>
+                </div>
+            </div>
+            <p><strong>Total:</strong> <span th:text="${order.getTotalPrice()} + ' kr'"></span></p>
 
             <a th:href="@{'/editOrder/' + ${order.id}}" class="add-btn">View / Edit</a>
         </div>
 
     </div>
-
 </div>
 
 </body>

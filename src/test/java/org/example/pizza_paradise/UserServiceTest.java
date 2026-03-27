@@ -19,9 +19,9 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     private UserService userService;
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    private IUserRepository userRepo = new JdbcUserRepository(jdbcTemplate);
-    private IPizzaRepository pizzaRepo = new JdbcPizzaRepository(jdbcTemplate);
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    private final IUserRepository userRepo = new JdbcUserRepository(jdbcTemplate);
+    private final IPizzaRepository pizzaRepo = new JdbcPizzaRepository(jdbcTemplate);
     private final Validation validation = new Validation(userRepo, pizzaRepo);
     private final User user = new User("Mathias", "Mathias@mail.com", "Tøpkildevej 63");
 
@@ -47,7 +47,6 @@ public class UserServiceTest {
     @Test
     void shouldCreateUser() {
         IUserRepository userRepository = mock(IUserRepository.class);
-
         userService.createUser(user);
         verify(userRepository).save(any(User.class));
     }

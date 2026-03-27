@@ -8,20 +8,20 @@ import java.util.List;
 public class Pizza {
     private int id;
     private String name;
-    private int price;
+    private double price;
     private List<Toppings> toppingsList;
     private String description;
 
     public Pizza(){}
 
-    public Pizza(String name, int price, List<Toppings> toppingsList, String description){
+    public Pizza(String name, double price, List<Toppings> toppingsList, String description){
         this.name = name;
         this.price=price;
         this.toppingsList = toppingsList;
         this.description = description;
     }
 
-    public Pizza(int id, String name, int price, List<Toppings> toppingsList, String description){
+    public Pizza(int id, String name, double price, List<Toppings> toppingsList, String description){
         this.id = id;
         this.name = name;
         this.price=price;
@@ -29,7 +29,7 @@ public class Pizza {
         this.description = description;
     }
 
-    public Pizza(int id, String name, int price, String description) {
+    public Pizza(int id, String name, double price, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -48,10 +48,10 @@ public class Pizza {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

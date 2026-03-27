@@ -53,6 +53,9 @@ public class User {
     }
 
     public void addBonusPoints(int i) {
+        if(i<0){
+            throw new IllegalArgumentException("Bonus points can't be negative");
+        }
         this.points += i;
     }
 }
