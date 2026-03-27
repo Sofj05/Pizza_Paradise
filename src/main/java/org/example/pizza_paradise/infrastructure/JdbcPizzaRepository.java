@@ -36,16 +36,16 @@ public class JdbcPizzaRepository implements IPizzaRepository {
 
     public Pizza findPizzaById(int id) {
         String sql = """
-            SELECT name, price,description
-            FROM pizzas
-            WHERE id= ?;
+            SELECT * FROM pizzas WHERE id= ?;
             """;
         try {
             return jdbcTemplate.queryForObject(sql,
                     (rs, rowNum) -> new Pizza(
+                            rs.getInt("id"),
                             rs.getString("name"),
                             rs.getInt("price"),
                             rs.getString("description")
+
                     ),
                     id
             );
