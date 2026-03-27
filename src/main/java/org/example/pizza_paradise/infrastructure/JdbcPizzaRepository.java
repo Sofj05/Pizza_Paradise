@@ -3,6 +3,7 @@ package org.example.pizza_paradise.infrastructure;
 import org.example.pizza_paradise.domain.Enum.Toppings;
 import org.example.pizza_paradise.domain.IPizzaRepository;
 import org.example.pizza_paradise.domain.Pizza;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -33,6 +34,25 @@ public class JdbcPizzaRepository implements IPizzaRepository {
 
     }
 
+    public Pizza findPizzaById(int id) {
+        String sql = """
+            SELECT name, price,description
+            FROM pizzas
+            WHERE id= ?;
+            """;
+        try {
+            return jdbcTemplate.queryForObject(sql,
+                    (rs, rowNum) -> new Pizza(
+                            rs.getString("name"),
+                            rs.getInt("price"),
+                            rs.getString("description")
+                    ),
+                    id
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
     public List<Pizza> findAll(){
         String sql = """

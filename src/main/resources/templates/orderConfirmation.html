@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+<body>
+<div>
+    <h1>✅ Order Confirmed!</h1>
+
+    <p>Thank you for your order.</p>
+
+    <!-- Optional: show order number -->
+    <p>
+        <strong>Order ID:</strong>
+        <span th:text="${order.getId()}">123</span>
+    </p>
+    <hr>
+    <h2>Your Order</h2>
+    <!-- List pizzas -->
+    <div th:each="pizza : ${order.pizzas}">
+        <div class="order-item">
+            <p>
+                <strong th:text="${pizza.name}">
+                    Pizza Name
+                </strong>
+            </p>
+
+            <p th:text="${pizza.price} + ' kr'">
+                0 kr
+            </p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>
+        Total:
+        <span th:text="${order.totalPrice}">
+            0
+        </span>
+        kr
+    </h3>
+    <br>
+    <!-- Back to menu -->
+    <a th:href="@{/pizzaMenu}">
+        <button class="checkout-btn">
+            Back to Menu
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>

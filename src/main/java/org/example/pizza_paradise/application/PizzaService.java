@@ -20,9 +20,11 @@ public class PizzaService {
     }
 
     public void addNewPizza(Pizza pizza){
-
     }
 
+    public Pizza getPizzaById(int pizzaId){
+    return pizzaRepo.findPizzaById(pizzaId);
+    }
     public List<Pizza> getPizzaMenu(){
         return pizzaRepo.findAll();
     }

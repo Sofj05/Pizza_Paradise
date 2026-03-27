@@ -8,4 +8,5 @@ public interface IPizzaRepository {
 
     List<Pizza> findAll();
 
+    Pizza findPizzaById(int pizzaId);
 }

@@ -34,7 +34,7 @@
     <div class="order-box">
         <h2>Your Order</h2>
 
-        <div th:each="item : ${order}">
+        <div th:each="item : ${order.pizzas}">
             <div class="order-item">
                 <p><strong th:text="${item.name}">Pizza</strong></p>
                 <p th:text="${item.price} + ' kr'"></p>

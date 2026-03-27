@@ -1,11 +1,12 @@
 package org.example.pizza_paradise.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
     private int id;
-    private List<Pizza> pizzas;
+    private List<Pizza> pizzas =  new ArrayList<Pizza>();
     private User user;
     private Date date;
     private double totalPrice;
@@ -60,6 +61,11 @@ public class Order {
     }
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public void addPizza(Pizza pizza) {
+        pizzas.add(pizza);
+        totalPrice += pizza.getPrice();
     }
 }
 

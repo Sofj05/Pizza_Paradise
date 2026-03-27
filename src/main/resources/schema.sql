@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS orders(
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_email VARCHAR(50),
     totalPrice DECIMAL(7,2),
-    created_at DATE DEFAULT CURRENT_DATE,
+    created_at DATE DEFAULT (CURRENT_DATE),
     FOREIGN KEY (user_email) REFERENCES Users(email)
     );
 

@@ -1,10 +1,12 @@
 package org.example.pizza_paradise.web;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.pizza_paradise.application.OrderService;
 import org.example.pizza_paradise.application.PizzaService;
 import org.example.pizza_paradise.application.UserService;
 import org.example.pizza_paradise.application.Validation.ValidationException;
 import org.example.pizza_paradise.domain.Order;
+import org.example.pizza_paradise.domain.Pizza;
 import org.example.pizza_paradise.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +39,12 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
         return "login";
     }
     @PostMapping("/login")
-    public String HandleLogin(@RequestParam String name,@RequestParam String email, Model model) {
+    public String HandleLogin(@RequestParam String name,@RequestParam String email, HttpSession session, Model model) {
 
         try{
             User user = userService.login(email,name);
+
+            session.setAttribute("user", user);
 
             model.addAttribute("user",user);
             return "result";
@@ -70,18 +74,44 @@ public UserController(UserService userService,  PizzaService pizzaService, Order
     }
 
     @GetMapping("/createOrder")
-    public String createOrder(Model model){
+    public String createOrder(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        Order order = (Order) session.getAttribute("order");
+        if (order == null) {
+            order = new Order();
+            order.setUser(user);
+            session.setAttribute("order", order);
+        }
+
         model.addAttribute("pizzaList", pizzaService.getPizzaMenu());
-        orderService.createOrder(order);
+        model.addAttribute("order", order);
+
+        int total = order.getPizzas().stream().mapToInt(Pizza::getPrice).sum();
+        model.addAttribute("total", total);
+
         return "createOrder";
     }
 
     @PostMapping("/addToOrder")
-    public String addToOrder(@ModelAttribute("order") Order order, Model model){
-        model.addAttribute("pizzaList", pizzaService.getPizzaMenu());
-        return "pizzaMenu";
+    public String addToOrder(@RequestParam int pizzaId, HttpSession session) {
+
+        Order order = (Order) session.getAttribute("order");
+        Pizza pizza = pizzaService.getPizzaById(pizzaId);
+        order.addPizza(pizza);
+
+        return "redirect:/createOrder";
     }
+    @PostMapping("/confirmOrder")
+    public String confirmOrder(HttpSession session, Model model) {
 
-
-
+        Order order = (Order) session.getAttribute("order");
+        orderService.createOrder(order);
+        model.addAttribute("order", order);
+        session.removeAttribute("order");
+        return "orderConfirmation";
+    }
 }
